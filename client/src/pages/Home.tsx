@@ -14,10 +14,14 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/i18n";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 export default function Home() {
   const [, setLocation] = useLocation();
   const [email, setEmail] = useState("");
+  const { language } = useLanguage();
 
   const handleApply = () => {
     setLocation("/apply");
@@ -26,26 +30,37 @@ export default function Home() {
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    toast("已记录", {
-      description: "我们会在下一轮内测开放时通知你",
+    const message = language === "zh" ? "已记录" : "Recorded";
+    const description = language === "zh" 
+      ? "我们会在下一轮内测开放时通知你" 
+      : "We'll notify you when the next beta opens";
+    toast(message, {
+      description,
     });
     setEmail("");
   };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Header with language toggle */}
+      <div className="border-b border-border py-4">
+        <div className="container flex justify-end">
+          <LanguageToggle />
+        </div>
+      </div>
+
       {/* Hero - Immediate clarity */}
       <section className="flex-1 flex items-center border-b border-border">
         <div className="container py-24">
           <div className="max-w-[700px]">
             {/* Tagline - Immediate positioning */}
             <p className="text-[14px] font-mono font-medium text-muted-foreground mb-8 tracking-widest">
-              UniClipboard · 内测招募中
+              {t(language, "tagline")}
             </p>
 
             {/* Main headline - Product promise */}
             <h1 className="text-[56px] font-mono font-bold leading-[1.1] mb-8 tracking-[-0.02em]">
-              一个以本地优先与端到端加密为前提的跨设备剪贴板同步工具
+              {t(language, "headline")}
             </h1>
 
             {/* Divider */}
@@ -54,7 +69,7 @@ export default function Home() {
             {/* Core value proposition - Technical accuracy */}
             <div className="space-y-3 mb-16">
               <p className="text-[16px] leading-[1.6]">
-                支持 macOS / Windows / Linux，不依赖公共云服务。
+                {t(language, "subheadline")}
               </p>
             </div>
 
@@ -64,12 +79,12 @@ export default function Home() {
               className="h-14 px-12 text-[16px] font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200 mb-16"
               style={{ borderRadius: 0 }}
             >
-              申请加入内测
+              {t(language, "ctaPrimary")}
             </Button>
 
             {/* Social proof - Minimal */}
             <p className="text-[13px] text-muted-foreground">
-              名额有限，优先邀请长期、多设备用户
+              {t(language, "socialProof")}
             </p>
           </div>
         </div>
@@ -80,30 +95,30 @@ export default function Home() {
         <div className="container">
           <div className="max-w-[700px]">
             <h2 className="text-[32px] font-mono font-semibold mb-8 tracking-[-0.01em]">
-              它解决什么问题
+              {t(language, "problemTitle")}
             </h2>
 
             <div className="space-y-6">
               <p className="text-[16px] leading-[1.6]">
-                在多台设备之间复制内容，本不该是一个需要"信任第三方服务器"的行为。
+                {t(language, "problemIntro")}
               </p>
               
               <p className="text-[16px] leading-[1.6] font-medium">
-                UniClipboard 关注的是三件事：
+                {t(language, "problemFocus")}
               </p>
 
               <ul className="space-y-4 ml-4">
                 <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                   <span className="text-muted-foreground flex-shrink-0">—</span>
-                  <span>剪贴板内容是否只在你的设备之间流动</span>
+                  <span>{t(language, "problemPoint1")}</span>
                 </li>
                 <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                   <span className="text-muted-foreground flex-shrink-0">—</span>
-                  <span>同步是否稳定、可控、可解释</span>
+                  <span>{t(language, "problemPoint2")}</span>
                 </li>
                 <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                   <span className="text-muted-foreground flex-shrink-0">—</span>
-                  <span>加密是否是默认能力，而不是可选项</span>
+                  <span>{t(language, "problemPoint3")}</span>
                 </li>
               </ul>
             </div>
@@ -116,30 +131,30 @@ export default function Home() {
         <div className="container">
           <div className="max-w-[700px]">
             <h2 className="text-[32px] font-mono font-semibold mb-8 tracking-[-0.01em]">
-              它是如何工作的
+              {t(language, "howTitle")}
             </h2>
 
             <ul className="space-y-4 mb-12">
               <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                 <span className="text-muted-foreground flex-shrink-0">—</span>
-                <span>本地监听剪贴板变更，不做轮询</span>
+                <span>{t(language, "howPoint1")}</span>
               </li>
               <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                 <span className="text-muted-foreground flex-shrink-0">—</span>
-                <span>设备之间点对点同步（无中心云转发）</span>
+                <span>{t(language, "howPoint2")}</span>
               </li>
               <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                 <span className="text-muted-foreground flex-shrink-0">—</span>
-                <span>端到端加密，内容在离开设备前即被加密</span>
+                <span>{t(language, "howPoint3")}</span>
               </li>
               <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                 <span className="text-muted-foreground flex-shrink-0">—</span>
-                <span>平台仅暴露系统事实，选择与策略交由上层控制</span>
+                <span>{t(language, "howPoint4")}</span>
               </li>
             </ul>
 
             <p className="text-[16px] leading-[1.6] text-muted-foreground">
-              这是一个为长期演进而设计的结构，而不是一次性方案。
+              {t(language, "howNote")}
             </p>
           </div>
         </div>
@@ -150,39 +165,39 @@ export default function Home() {
         <div className="container">
           <div className="max-w-[700px]">
             <h2 className="text-[32px] font-mono font-semibold mb-16 tracking-[-0.01em]">
-              内测用户将获得
+              {t(language, "benefitsTitle")}
             </h2>
 
             <div className="space-y-8">
               <div className="flex items-start gap-4">
                 <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-[16px] font-medium mb-1">创始用户身份</p>
-                  <p className="text-[14px] text-muted-foreground">永久保留</p>
+                  <p className="text-[16px] font-medium mb-1">{t(language, "benefitBadge")}</p>
+                  <p className="text-[14px] text-muted-foreground">{t(language, "benefitBadgeDesc")}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-[16px] font-medium mb-1">核心同步与加密能力永久可用</p>
-                  <p className="text-[14px] text-muted-foreground">更高使用上限，正式版不回收</p>
+                  <p className="text-[16px] font-medium mb-1">{t(language, "benefitEncryption")}</p>
+                  <p className="text-[14px] text-muted-foreground">{t(language, "benefitEncryptionDesc")}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-[16px] font-medium mb-1">新功能优先体验</p>
-                  <p className="text-[14px] text-muted-foreground">部分功能仅在内测阶段开放</p>
+                  <p className="text-[16px] font-medium mb-1">{t(language, "benefitFeatures")}</p>
+                  <p className="text-[14px] text-muted-foreground">{t(language, "benefitFeaturesDesc")}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-[16px] font-medium mb-1">功能共创与优先级投票</p>
-                  <p className="text-[14px] text-muted-foreground">直接与开发者讨论产品方向</p>
+                  <p className="text-[16px] font-medium mb-1">{t(language, "benefitCocreate")}</p>
+                  <p className="text-[14px] text-muted-foreground">{t(language, "benefitCocreateDesc")}</p>
                 </div>
               </div>
             </div>
@@ -195,21 +210,21 @@ export default function Home() {
         <div className="container">
           <div className="max-w-[700px]">
             <h2 className="text-[32px] font-mono font-semibold mb-12 tracking-[-0.01em]">
-              适合谁
+              {t(language, "whoTitle")}
             </h2>
 
             <ul className="space-y-4">
               <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                 <span className="text-muted-foreground flex-shrink-0">—</span>
-                <span>经常在多台设备间切换工作</span>
+                <span>{t(language, "whoPoint1")}</span>
               </li>
               <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                 <span className="text-muted-foreground flex-shrink-0">—</span>
-                <span>对数据隐私与本地控制有明确需求</span>
+                <span>{t(language, "whoPoint2")}</span>
               </li>
               <li className="text-[16px] leading-[1.6] flex items-start gap-4">
                 <span className="text-muted-foreground flex-shrink-0">—</span>
-                <span>能接受早期产品的不完美，并愿意反馈</span>
+                <span>{t(language, "whoPoint3")}</span>
               </li>
             </ul>
           </div>
@@ -221,15 +236,15 @@ export default function Home() {
         <div className="container">
           <div className="max-w-[700px]">
             <h2 className="text-[32px] font-mono font-semibold mb-8 tracking-[-0.01em]">
-              当前状态
+              {t(language, "statusTitle")}
             </h2>
 
             <div className="space-y-4">
               <p className="text-[16px] leading-[1.6]">
-                产品仍在早期阶段，功能与界面可能调整。
+                {t(language, "statusText1")}
               </p>
               <p className="text-[16px] leading-[1.6] text-muted-foreground">
-                我们会明确告知重要变更，不做暗改。
+                {t(language, "statusText2")}
               </p>
             </div>
           </div>
@@ -241,7 +256,7 @@ export default function Home() {
         <div className="container">
           <div className="max-w-[700px]">
             <p className="text-[18px] leading-[1.6] mb-12">
-              如果你认同这个理念——
+              {t(language, "finalCTAText")}
             </p>
 
             <Button
@@ -249,7 +264,7 @@ export default function Home() {
               className="h-14 px-12 text-[16px] font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200"
               style={{ borderRadius: 0 }}
             >
-              申请加入内测
+              {t(language, "ctaPrimary")}
             </Button>
           </div>
         </div>
@@ -260,13 +275,13 @@ export default function Home() {
         <div className="container">
           <div className="max-w-[700px]">
             <p className="text-[14px] text-muted-foreground mb-6">
-              不想错过？留下邮箱，下一轮开放时通知你。
+              {t(language, "emailPrompt")}
             </p>
 
             <form onSubmit={handleEmailSubmit} className="flex gap-3">
               <Input
                 type="email"
-                placeholder="your@email.com"
+                placeholder={t(language, "emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="h-12 flex-1 bg-background border-border text-[14px]"
@@ -277,7 +292,7 @@ export default function Home() {
                 className="h-12 px-8 text-[14px] font-medium bg-foreground text-background hover:bg-foreground/90 transition-colors duration-200"
                 style={{ borderRadius: 0 }}
               >
-                提交
+                {t(language, "emailSubmit")}
               </Button>
             </form>
           </div>
@@ -288,7 +303,7 @@ export default function Home() {
       <footer className="py-8 border-t border-border">
         <div className="container">
           <p className="text-[12px] text-muted-foreground">
-            © 2026 UniClipboard
+            {t(language, "copyright")}
           </p>
         </div>
       </footer>

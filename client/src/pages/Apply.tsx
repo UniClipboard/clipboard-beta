@@ -15,10 +15,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/i18n";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 export default function Apply() {
   const [, setLocation] = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { language } = useLanguage();
 
   const [formData, setFormData] = useState({
     platforms: [] as string[],
@@ -42,23 +46,23 @@ export default function Apply() {
 
     // Validation
     if (formData.platforms.length === 0) {
-      toast.error("请选择至少一个平台");
+      toast.error(t(language, "validationPlatforms"));
       return;
     }
     if (!formData.deviceCount) {
-      toast.error("请选择设备数量");
+      toast.error(t(language, "validationDevices"));
       return;
     }
     if (!formData.reason.trim()) {
-      toast.error("请填写使用原因");
+      toast.error(t(language, "validationReason"));
       return;
     }
     if (!formData.acceptBeta) {
-      toast.error("请确认是否接受早期版本");
+      toast.error(t(language, "validationBeta"));
       return;
     }
     if (!formData.email.trim()) {
-      toast.error("请填写邮箱");
+      toast.error(t(language, "validationEmail"));
       return;
     }
 
@@ -72,17 +76,43 @@ export default function Apply() {
     }, 1000);
   };
 
+  const platformLabels = {
+    macOS: t(language, "platformMacOS"),
+    Windows: t(language, "platformWindows"),
+    Linux: t(language, "platformLinux"),
+  };
+
+  const deviceCounts = ["1", "2", "3", "4+"];
+  const deviceLabels: Record<string, string> = {
+    "1": t(language, "deviceCount1"),
+    "2": t(language, "deviceCount2"),
+    "3": t(language, "deviceCount3"),
+    "4+": t(language, "deviceCount4Plus"),
+  };
+
+  const betaOptions = [
+    { value: "yes", label: t(language, "answerYes") },
+    { value: "no", label: t(language, "answerNo") },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
+      {/* Header with language toggle */}
+      <div className="border-b border-border py-4">
+        <div className="container flex justify-end">
+          <LanguageToggle />
+        </div>
+      </div>
+
+      {/* Page Header */}
       <section className="border-b border-border py-16">
         <div className="container">
           <div className="max-w-[700px]">
             <p className="text-[14px] font-mono font-medium text-muted-foreground mb-4 tracking-widest">
-              UniClipboard · 内测申请
+              {t(language, "taglineApply")}
             </p>
             <h1 className="text-[48px] font-mono font-bold leading-[1.1] tracking-[-0.02em]">
-              加入内测
+              {t(language, "applyTitle")}
             </h1>
           </div>
         </div>
@@ -93,14 +123,14 @@ export default function Apply() {
         <div className="container">
           <div className="max-w-[700px]">
             <p className="text-[16px] leading-[1.6] mb-24 text-muted-foreground">
-              我们会优先邀请真实多设备使用者。请认真填写以下问题，帮助我们了解你的需求。
+              {t(language, "applyIntro")}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-24">
               {/* Question 1: Platforms */}
               <div>
                 <h2 className="text-[18px] font-semibold mb-8">
-                  1. 你主要使用哪些平台？
+                  {t(language, "question1")}
                 </h2>
                 <div className="space-y-4">
                   {["macOS", "Windows", "Linux"].map((platform) => (
@@ -114,7 +144,7 @@ export default function Apply() {
                         htmlFor={platform}
                         className="text-[16px] cursor-pointer"
                       >
-                        {platform}
+                        {platformLabels[platform as keyof typeof platformLabels]}
                       </Label>
                     </div>
                   ))}
@@ -124,7 +154,7 @@ export default function Apply() {
               {/* Question 2: Device Count */}
               <div>
                 <h2 className="text-[18px] font-semibold mb-8">
-                  2. 你日常有几台设备需要同步剪贴板？
+                  {t(language, "question2")}
                 </h2>
                 <RadioGroup
                   value={formData.deviceCount}
@@ -133,14 +163,14 @@ export default function Apply() {
                   }
                 >
                   <div className="space-y-4">
-                    {["1", "2", "3", "4+"].map((count) => (
+                    {deviceCounts.map((count) => (
                       <div key={count} className="flex items-center gap-3">
                         <RadioGroupItem value={count} id={`device-${count}`} />
                         <Label
                           htmlFor={`device-${count}`}
                           className="text-[16px] cursor-pointer"
                         >
-                          {count}
+                          {deviceLabels[count]}
                         </Label>
                       </div>
                     ))}
@@ -151,13 +181,13 @@ export default function Apply() {
               {/* Question 3: Reason (Soul Question) */}
               <div>
                 <h2 className="text-[18px] font-semibold mb-2">
-                  3. 你为什么想使用 UniClipboard？
+                  {t(language, "question3")}
                 </h2>
                 <p className="text-[14px] text-muted-foreground mb-8">
-                  一句话就够（必填）
+                  {t(language, "question3Hint")}
                 </p>
                 <Textarea
-                  placeholder="例：我需要在 Mac、Linux 和 Windows 之间安全地同步代码片段，不想依赖云服务"
+                  placeholder={t(language, "question3Placeholder")}
                   value={formData.reason}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, reason: e.target.value }))
@@ -170,7 +200,7 @@ export default function Apply() {
               {/* Question 4: Accept Beta */}
               <div>
                 <h2 className="text-[18px] font-semibold mb-8">
-                  4. 是否可以接受早期版本的不稳定，并愿意反馈？
+                  {t(language, "question4")}
                 </h2>
                 <RadioGroup
                   value={formData.acceptBeta}
@@ -179,10 +209,7 @@ export default function Apply() {
                   }
                 >
                   <div className="space-y-4">
-                    {[
-                      { value: "yes", label: "是" },
-                      { value: "no", label: "否" },
-                    ].map(({ value, label }) => (
+                    {betaOptions.map(({ value, label }) => (
                       <div key={value} className="flex items-center gap-3">
                         <RadioGroupItem value={value} id={`beta-${value}`} />
                         <Label
@@ -200,11 +227,11 @@ export default function Apply() {
               {/* Question 5: Email */}
               <div>
                 <h2 className="text-[18px] font-semibold mb-8">
-                  5. 邮箱（用于发送内测邀请）
+                  {t(language, "question5")}
                 </h2>
                 <Input
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder={t(language, "emailPlaceholder")}
                   value={formData.email}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, email: e.target.value }))
@@ -222,7 +249,7 @@ export default function Apply() {
                   className="h-14 px-12 text-[16px] font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200 disabled:opacity-50"
                   style={{ borderRadius: 0 }}
                 >
-                  {isSubmitting ? "提交中..." : "提交申请"}
+                  {isSubmitting ? t(language, "submitting") : t(language, "submitButton")}
                 </Button>
               </div>
             </form>
@@ -234,7 +261,7 @@ export default function Apply() {
       <footer className="py-8 border-t border-border">
         <div className="container">
           <p className="text-[12px] text-muted-foreground">
-            © 2026 UniClipboard
+            {t(language, "copyright")}
           </p>
         </div>
       </footer>
