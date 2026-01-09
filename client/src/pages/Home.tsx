@@ -12,15 +12,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { toast } from "sonner";
 
 export default function Home() {
+  const [, setLocation] = useLocation();
   const [email, setEmail] = useState("");
 
   const handleApply = () => {
-    toast("功能开发中", {
-      description: "内测申请功能即将上线",
-    });
+    setLocation("/apply");
   };
 
   const handleEmailSubmit = (e: React.FormEvent) => {
