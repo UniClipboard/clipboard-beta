@@ -72,12 +72,29 @@ export default function Apply() {
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      // Redirect to success page
+    try {
+      const response = await fetch("/api/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          platforms: formData.platforms,
+          deviceCount: formData.deviceCount,
+          reason: formData.reason,
+          acceptBeta: formData.acceptBeta,
+          email: formData.email,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("submit_failed");
+      }
+
       setLocation("/apply-success");
-    }, 1000);
+    } catch {
+      toast.error(t(language, "submitFailed"));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const platformLabels = {

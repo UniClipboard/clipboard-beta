@@ -99,6 +99,7 @@ export const translations: Record<Language, Record<string, string>> = {
     validationReason: "请填写使用原因",
     validationBeta: "请确认是否接受早期版本",
     validationEmail: "请填写邮箱",
+    submitFailed: "提交失败，请稍后重试",
 
     // Success Page
     successTitle: "已收到你的内测申请",
@@ -222,6 +223,7 @@ export const translations: Record<Language, Record<string, string>> = {
     validationReason: "Please explain why you want to use UniClipboard",
     validationBeta: "Please confirm whether you can accept early-stage version",
     validationEmail: "Please enter your email",
+    submitFailed: "Submission failed. Please try again.",
 
     // Success Page
     successTitle: "We received your beta application",
