@@ -108,7 +108,7 @@ export default function Home() {
 
             <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <span className="text-[20px] flex-shrink-0">🎖</span>
+                <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-[16px] font-medium mb-1">创始用户身份</p>
                   <p className="text-[14px] text-muted-foreground">永久保留</p>
@@ -116,7 +116,7 @@ export default function Home() {
               </div>
 
               <div className="flex items-start gap-4">
-                <span className="text-[20px] flex-shrink-0">🔓</span>
+                <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-[16px] font-medium mb-1">核心同步与加密能力永久可用</p>
                   <p className="text-[14px] text-muted-foreground">更高使用上限，正式版不回收</p>
@@ -124,7 +124,7 @@ export default function Home() {
               </div>
 
               <div className="flex items-start gap-4">
-                <span className="text-[20px] flex-shrink-0">🚀</span>
+                <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-[16px] font-medium mb-1">新功能优先体验</p>
                   <p className="text-[14px] text-muted-foreground">部分功能仅在内测阶段开放</p>
@@ -132,7 +132,7 @@ export default function Home() {
               </div>
 
               <div className="flex items-start gap-4">
-                <span className="text-[20px] flex-shrink-0">🧭</span>
+                <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-[16px] font-medium mb-1">功能共创与优先级投票</p>
                   <p className="text-[14px] text-muted-foreground">直接与开发者讨论产品方向</p>
