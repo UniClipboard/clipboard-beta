@@ -1,10 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle, Home } from "lucide-react";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/i18n";
 
 export default function NotFound() {
   const [, setLocation] = useLocation();
+  const { language } = useLanguage();
+
+  useEffect(() => {
+    document.title = t(language, "documentTitleNotFound");
+  }, [language]);
 
   const handleGoHome = () => {
     setLocation("/");

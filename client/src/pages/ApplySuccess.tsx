@@ -1,12 +1,13 @@
 /**
  * UniClipboard Beta Application Success Page
  * Swiss International Style - Status Confirmation
- * 
+ *
  * Goal: Reduce user anxiety + Increase email open rate
  */
 
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
+import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/i18n";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -14,6 +15,10 @@ import { LanguageToggle } from "@/components/LanguageToggle";
 export default function ApplySuccess() {
   const [, setLocation] = useLocation();
   const { language } = useLanguage();
+
+  useEffect(() => {
+    document.title = t(language, "documentTitleApplySuccess");
+  }, [language]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -53,15 +58,21 @@ export default function ApplySuccess() {
                 </p>
                 <ul className="space-y-3 ml-4">
                   <li className="text-[16px] leading-[1.6] flex items-start gap-4">
-                    <span className="text-muted-foreground flex-shrink-0">1.</span>
+                    <span className="text-muted-foreground flex-shrink-0">
+                      1.
+                    </span>
                     <span>{t(language, "step1")}</span>
                   </li>
                   <li className="text-[16px] leading-[1.6] flex items-start gap-4">
-                    <span className="text-muted-foreground flex-shrink-0">2.</span>
+                    <span className="text-muted-foreground flex-shrink-0">
+                      2.
+                    </span>
                     <span>{t(language, "step2")}</span>
                   </li>
                   <li className="text-[16px] leading-[1.6] flex items-start gap-4">
-                    <span className="text-muted-foreground flex-shrink-0">3.</span>
+                    <span className="text-muted-foreground flex-shrink-0">
+                      3.
+                    </span>
                     <span>{t(language, "step3")}</span>
                   </li>
                 </ul>

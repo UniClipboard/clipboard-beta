@@ -1,7 +1,7 @@
 /**
  * UniClipboard Beta Application Form
  * Swiss International Style - Minimalist Form Design
- * 
+ *
  * 5 carefully designed questions to filter 50% unsuitable users
  * Question 3 is the soul question - reveals user quality in one sentence
  */
@@ -12,7 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -24,6 +24,10 @@ export default function Apply() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { language } = useLanguage();
 
+  useEffect(() => {
+    document.title = t(language, "documentTitleApply");
+  }, [language]);
+
   const [formData, setFormData] = useState({
     platforms: [] as string[],
     deviceCount: "",
@@ -33,10 +37,10 @@ export default function Apply() {
   });
 
   const handlePlatformChange = (platform: string) => {
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       platforms: prev.platforms.includes(platform)
-        ? prev.platforms.filter((p) => p !== platform)
+        ? prev.platforms.filter(p => p !== platform)
         : [...prev.platforms, platform],
     }));
   };
@@ -99,14 +103,14 @@ export default function Apply() {
     <div className="min-h-screen bg-background">
       {/* Header with language toggle */}
       <div className="border-b border-border py-4">
-        <div className="container flex justify-end">
+        <div className="container mx-auto max-w-5xl px-6 flex justify-end">
           <LanguageToggle />
         </div>
       </div>
 
       {/* Page Header */}
       <section className="border-b border-border py-16">
-        <div className="container">
+        <div className="container mx-auto max-w-5xl px-6">
           <div className="max-w-[700px]">
             <p className="text-[14px] font-mono font-medium text-muted-foreground mb-4 tracking-widest">
               {t(language, "taglineApply")}
@@ -120,7 +124,7 @@ export default function Apply() {
 
       {/* Form */}
       <section className="py-32">
-        <div className="container">
+        <div className="container mx-auto max-w-5xl px-6">
           <div className="max-w-[700px]">
             <p className="text-[16px] leading-[1.6] mb-24 text-muted-foreground">
               {t(language, "applyIntro")}
@@ -133,7 +137,7 @@ export default function Apply() {
                   {t(language, "question1")}
                 </h2>
                 <div className="space-y-4">
-                  {["macOS", "Windows", "Linux"].map((platform) => (
+                  {["macOS", "Windows", "Linux"].map(platform => (
                     <div key={platform} className="flex items-center gap-3">
                       <Checkbox
                         id={platform}
@@ -144,7 +148,11 @@ export default function Apply() {
                         htmlFor={platform}
                         className="text-[16px] cursor-pointer"
                       >
-                        {platformLabels[platform as keyof typeof platformLabels]}
+                        {
+                          platformLabels[
+                            platform as keyof typeof platformLabels
+                          ]
+                        }
                       </Label>
                     </div>
                   ))}
@@ -158,12 +166,12 @@ export default function Apply() {
                 </h2>
                 <RadioGroup
                   value={formData.deviceCount}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({ ...prev, deviceCount: value }))
+                  onValueChange={value =>
+                    setFormData(prev => ({ ...prev, deviceCount: value }))
                   }
                 >
                   <div className="space-y-4">
-                    {deviceCounts.map((count) => (
+                    {deviceCounts.map(count => (
                       <div key={count} className="flex items-center gap-3">
                         <RadioGroupItem value={count} id={`device-${count}`} />
                         <Label
@@ -189,8 +197,8 @@ export default function Apply() {
                 <Textarea
                   placeholder={t(language, "question3Placeholder")}
                   value={formData.reason}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, reason: e.target.value }))
+                  onChange={e =>
+                    setFormData(prev => ({ ...prev, reason: e.target.value }))
                   }
                   className="h-24 resize-none text-[16px]"
                   style={{ borderRadius: 0 }}
@@ -204,8 +212,8 @@ export default function Apply() {
                 </h2>
                 <RadioGroup
                   value={formData.acceptBeta}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({ ...prev, acceptBeta: value }))
+                  onValueChange={value =>
+                    setFormData(prev => ({ ...prev, acceptBeta: value }))
                   }
                 >
                   <div className="space-y-4">
@@ -233,8 +241,8 @@ export default function Apply() {
                   type="email"
                   placeholder={t(language, "emailPlaceholder")}
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, email: e.target.value }))
+                  onChange={e =>
+                    setFormData(prev => ({ ...prev, email: e.target.value }))
                   }
                   className="h-12 text-[16px]"
                   style={{ borderRadius: 0 }}
@@ -249,7 +257,9 @@ export default function Apply() {
                   className="h-14 px-12 text-[16px] font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200 disabled:opacity-50"
                   style={{ borderRadius: 0 }}
                 >
-                  {isSubmitting ? t(language, "submitting") : t(language, "submitButton")}
+                  {isSubmitting
+                    ? t(language, "submitting")
+                    : t(language, "submitButton")}
                 </Button>
               </div>
             </form>
@@ -259,7 +269,7 @@ export default function Apply() {
 
       {/* Footer */}
       <footer className="py-8 border-t border-border">
-        <div className="container">
+        <div className="container mx-auto max-w-5xl px-6">
           <p className="text-[12px] text-muted-foreground">
             {t(language, "copyright")}
           </p>

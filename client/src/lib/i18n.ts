@@ -3,17 +3,20 @@
  * Supports browser language detection and manual language switching
  */
 
-export type Language = 'zh' | 'en';
+export type Language = "zh" | "en";
 
 export const translations: Record<Language, Record<string, string>> = {
   zh: {
     // Navigation & Header
     tagline: "UniClipboard · 内测招募中",
     taglineApply: "UniClipboard · 内测申请",
+    documentTitleHome: "UniClipboard 跨设备剪贴板 - 内测招募",
+    documentTitleApply: "UniClipboard 内测申请",
+    documentTitleApplySuccess: "UniClipboard 申请已提交",
+    documentTitleNotFound: "UniClipboard · 页面未找到",
 
     // Home Page
-    headline:
-      "一个以本地优先与端到端加密为前提的跨设备剪贴板同步工具",
+    headline: "一个端到端加密的跨设备剪贴板同步工具",
     subheadline: "支持 macOS / Windows / Linux，不依赖公共云服务。",
     ctaPrimary: "申请加入内测",
     socialProof: "名额有限，优先邀请长期、多设备用户",
@@ -99,8 +102,7 @@ export const translations: Record<Language, Record<string, string>> = {
 
     // Success Page
     successTitle: "已收到你的内测申请",
-    successMessage:
-      "我们会优先邀请真实多设备使用者，并通过邮件发送内测邀请。",
+    successMessage: "我们会优先邀请真实多设备使用者，并通过邮件发送内测邀请。",
     nextSteps: "接下来的步骤：",
     step1: "我们会人工筛选你的申请",
     step2: "通过后会收到邀请邮件",
@@ -108,14 +110,11 @@ export const translations: Record<Language, Record<string, string>> = {
     backHome: "返回首页",
     faqTitle: "常见问题",
     faqQ1: "多久会收到邀请？",
-    faqA1:
-      "我们会在 1-2 周内完成筛选。如果你的申请符合条件，会优先获得邀请。",
+    faqA1: "我们会在 1-2 周内完成筛选。如果你的申请符合条件，会优先获得邀请。",
     faqQ2: "邮件没收到怎么办？",
-    faqA2:
-      "请检查垃圾邮件文件夹。如果仍未收到，可以回复邮件告诉我们。",
+    faqA2: "请检查垃圾邮件文件夹。如果仍未收到，可以回复邮件告诉我们。",
     faqQ3: "可以推荐朋友吗？",
-    faqA3:
-      "可以。我们欢迎真实的多设备用户加入。请让他们直接填写申请表。",
+    faqA3: "可以。我们欢迎真实的多设备用户加入。请让他们直接填写申请表。",
 
     // Language Toggle
     languageLabel: "Language",
@@ -124,11 +123,16 @@ export const translations: Record<Language, Record<string, string>> = {
     // Navigation & Header
     tagline: "UniClipboard · Beta Recruitment",
     taglineApply: "UniClipboard · Beta Application",
+    documentTitleHome: "UniClipboard Cross-Device Clipboard - Beta Recruitment",
+    documentTitleApply: "UniClipboard Beta Application",
+    documentTitleApplySuccess: "UniClipboard Application Received",
+    documentTitleNotFound: "UniClipboard · Page Not Found",
 
     // Home Page
     headline:
-      "A cross-device clipboard sync tool built on local-first and end-to-end encryption",
-    subheadline: "Supports macOS / Windows / Linux. No public cloud dependency.",
+      "A cross-device clipboard sync tool built on end-to-end encryption",
+    subheadline:
+      "Supports macOS / Windows / Linux. No public cloud dependency.",
     ctaPrimary: "Apply for Beta",
     socialProof: "Limited slots. Priority for long-term, multi-device users.",
 
@@ -145,9 +149,12 @@ export const translations: Record<Language, Record<string, string>> = {
     howTitle: "How it works",
     howPoint1: "Local clipboard monitoring, no polling",
     howPoint2: "Peer-to-peer sync between devices (no central cloud relay)",
-    howPoint3: "End-to-end encryption, content encrypted before leaving your device",
-    howPoint4: "Platform exposes system facts only, choices and policies are yours",
-    howNote: "This is a structure designed for long-term evolution, not a one-time solution.",
+    howPoint3:
+      "End-to-end encryption, content encrypted before leaving your device",
+    howPoint4:
+      "Platform exposes system facts only, choices and policies are yours",
+    howNote:
+      "This is a structure designed for long-term evolution, not a one-time solution.",
 
     // Benefits Section
     benefitsTitle: "Beta users will receive",
@@ -158,18 +165,21 @@ export const translations: Record<Language, Record<string, string>> = {
     benefitFeatures: "Early access to new features",
     benefitFeaturesDesc: "Some features only available during beta",
     benefitCocreate: "Feature co-creation and voting rights",
-    benefitCocreateDesc: "Direct discussion with developers on product direction",
+    benefitCocreateDesc:
+      "Direct discussion with developers on product direction",
 
     // Who Section
     whoTitle: "Who is this for",
     whoPoint1: "Frequently switching between multiple devices",
     whoPoint2: "Clear requirements for data privacy and local control",
-    whoPoint3: "Willing to accept early-stage imperfections and provide feedback",
+    whoPoint3:
+      "Willing to accept early-stage imperfections and provide feedback",
 
     // Status Section
     statusTitle: "Current status",
     statusText1: "Product is in early stage, features and UI may change.",
-    statusText2: "We will clearly communicate important changes, no silent updates.",
+    statusText2:
+      "We will clearly communicate important changes, no silent updates.",
 
     // Final CTA Section
     finalCTAText: "If you align with this philosophy——",
@@ -200,7 +210,8 @@ export const translations: Record<Language, Record<string, string>> = {
     question3Hint: "One sentence is enough (required)",
     question3Placeholder:
       "Example: I need to safely sync code snippets between Mac, Linux and Windows without relying on cloud services",
-    question4: "4. Can you accept early-stage instability and provide feedback?",
+    question4:
+      "4. Can you accept early-stage instability and provide feedback?",
     answerYes: "Yes",
     answerNo: "No",
     question5: "5. Email (for sending beta invitations)",

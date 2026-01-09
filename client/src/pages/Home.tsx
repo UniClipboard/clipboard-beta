@@ -1,7 +1,7 @@
 /**
  * Swiss International Style - Technical Landing
  * Goal: 10 seconds to understand who this is for and click CTA
- * 
+ *
  * Design Principles:
  * - Absolute clarity and hierarchy
  * - Every element serves a purpose
@@ -11,7 +11,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -23,7 +23,12 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const { language } = useLanguage();
 
+  useEffect(() => {
+    document.title = t(language, "documentTitleHome");
+  }, [language]);
+
   const handleApply = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     setLocation("/apply");
   };
 
@@ -31,9 +36,10 @@ export default function Home() {
     e.preventDefault();
     if (!email) return;
     const message = language === "zh" ? "已记录" : "Recorded";
-    const description = language === "zh" 
-      ? "我们会在下一轮内测开放时通知你" 
-      : "We'll notify you when the next beta opens";
+    const description =
+      language === "zh"
+        ? "我们会在下一轮内测开放时通知你"
+        : "We'll notify you when the next beta opens";
     toast(message, {
       description,
     });
@@ -52,7 +58,7 @@ export default function Home() {
       {/* Hero - Immediate clarity */}
       <section className="flex-1 flex items-center border-b border-border">
         <div className="container py-24">
-          <div className="max-w-[700px]">
+          <div className="max-w-[900px]">
             {/* Tagline - Immediate positioning */}
             <p className="text-[14px] font-mono font-medium text-muted-foreground mb-8 tracking-widest">
               {t(language, "tagline")}
@@ -102,7 +108,7 @@ export default function Home() {
               <p className="text-[16px] leading-[1.6]">
                 {t(language, "problemIntro")}
               </p>
-              
+
               <p className="text-[16px] leading-[1.6] font-medium">
                 {t(language, "problemFocus")}
               </p>
@@ -172,32 +178,48 @@ export default function Home() {
               <div className="flex items-start gap-4">
                 <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-[16px] font-medium mb-1">{t(language, "benefitBadge")}</p>
-                  <p className="text-[14px] text-muted-foreground">{t(language, "benefitBadgeDesc")}</p>
+                  <p className="text-[16px] font-medium mb-1">
+                    {t(language, "benefitBadge")}
+                  </p>
+                  <p className="text-[14px] text-muted-foreground">
+                    {t(language, "benefitBadgeDesc")}
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-[16px] font-medium mb-1">{t(language, "benefitEncryption")}</p>
-                  <p className="text-[14px] text-muted-foreground">{t(language, "benefitEncryptionDesc")}</p>
+                  <p className="text-[16px] font-medium mb-1">
+                    {t(language, "benefitEncryption")}
+                  </p>
+                  <p className="text-[14px] text-muted-foreground">
+                    {t(language, "benefitEncryptionDesc")}
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-[16px] font-medium mb-1">{t(language, "benefitFeatures")}</p>
-                  <p className="text-[14px] text-muted-foreground">{t(language, "benefitFeaturesDesc")}</p>
+                  <p className="text-[16px] font-medium mb-1">
+                    {t(language, "benefitFeatures")}
+                  </p>
+                  <p className="text-[14px] text-muted-foreground">
+                    {t(language, "benefitFeaturesDesc")}
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <div className="w-1 h-12 bg-foreground flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-[16px] font-medium mb-1">{t(language, "benefitCocreate")}</p>
-                  <p className="text-[14px] text-muted-foreground">{t(language, "benefitCocreateDesc")}</p>
+                  <p className="text-[16px] font-medium mb-1">
+                    {t(language, "benefitCocreate")}
+                  </p>
+                  <p className="text-[14px] text-muted-foreground">
+                    {t(language, "benefitCocreateDesc")}
+                  </p>
                 </div>
               </div>
             </div>
@@ -266,35 +288,6 @@ export default function Home() {
             >
               {t(language, "ctaPrimary")}
             </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Email signup - Minimal friction */}
-      <section className="border-b border-border py-16 bg-secondary/30">
-        <div className="container">
-          <div className="max-w-[700px]">
-            <p className="text-[14px] text-muted-foreground mb-6">
-              {t(language, "emailPrompt")}
-            </p>
-
-            <form onSubmit={handleEmailSubmit} className="flex gap-3">
-              <Input
-                type="email"
-                placeholder={t(language, "emailPlaceholder")}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="h-12 flex-1 bg-background border-border text-[14px]"
-                style={{ borderRadius: 0 }}
-              />
-              <Button
-                type="submit"
-                className="h-12 px-8 text-[14px] font-medium bg-foreground text-background hover:bg-foreground/90 transition-colors duration-200"
-                style={{ borderRadius: 0 }}
-              >
-                {t(language, "emailSubmit")}
-              </Button>
-            </form>
           </div>
         </div>
       </section>
